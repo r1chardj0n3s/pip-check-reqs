@@ -36,11 +36,10 @@ def find_extra_reqs(options, requirements_filename):
             package_location = package.location
             package_files = []
             for item in (package.files or []):
-                here = pathlib.Path('.').resolve()
                 item_location_rel = (pathlib.Path(package_location) / item)
                 item_location = item_location_rel.resolve()
                 try:
-                    relative_item_location = item_location.relative_to(here)
+                    relative_item_location = item_location.relative_to(package_location)
                 except ValueError:
                     # Ideally we would use Pathlib.is_relative_to rather than
                     # checking for a ValueError, but that is only available in
